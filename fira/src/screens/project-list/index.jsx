@@ -5,9 +5,7 @@ import React from "react";
 import qs from "qs";
 import {cleanObject} from "../../utils";
 
-
 const apiUrl = process.env.REACT_APP_API_URL
-
 export const ProjectListScreen = () => {
     const [users,setUsers]=useState([])
     const [param,setParam] = useState({
@@ -17,22 +15,10 @@ export const ProjectListScreen = () => {
     const [list,setList]=useState([])
 
     useEffect(() => {
-        fetch(`${apiUrl}/projects`).then(async response=>{
-            console.log(apiUrl)
+        fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(param))}`).then(async response=>{
             console.log(response)
             if(response.ok){
-                console.log(response.ok)
-                console.log(1)
-                const data=response.json()
-                console.log(data)
-                    data.then(data1 => {
-                        console.log(data1);
-                    })
-                    .catch(error => {
-                        console.log("Error:", error);
-                    });
-                setList(await data)
-                console.log(1)
+                setList(await response.json())
             }})
     }, [param]);
 
