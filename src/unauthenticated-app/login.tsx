@@ -10,11 +10,11 @@ const apiUrl = process.env.REACT_APP_API_URL
 export const LoginScreen=({onError}:{onError:(error:Error)=>void})=>{
 
     const {login,user}=useAuth()
-    const {run,isLoading}=useAsync()
+    const {run,isLoading}=useAsync(undefined,{throwOnError: true})
 
     const  handleSubmit=async (values:{username:string,password:string})=>{
         try{
-            run(login(values))
+            await run(login(values))
         }catch (e){
             onError(e as Error)
         }
